@@ -3,419 +3,471 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>忠县消防政府专职消防员招录心理健康与职业适应性评估系统</title>
+    <title>忠县消防专职消防员招录心理潜质与职业适配度测试</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, "Microsoft YaHei", sans-serif; }
         :root {
-            --primary-color: #e63946;
+            --primary: #e63946;
             --primary-dark: #c41e3a;
-            --text-dark: #1d3557;
-            --text-gray: #6c757d;
-            --border-color: #dee2e6;
-            --success-color: #2b8a3e;
-            --danger-color: #c92a2a;
-            --warning-color: #e67700;
-            --bg-gradient: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            --text-main: #2b2d42;
+            --text-muted: #8d99ae;
+            --bg-color: #f8f9fa;
+            --border: #edf2f4;
         }
 
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif; background: var(--bg-gradient); min-height: 100vh; padding: 15px; line-height: 1.6; }
-        .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
-        .header { background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)); color: white; padding: 35px 30px; text-align: center; }
-        .header-title { font-size: 26px; font-weight: 700; margin-bottom: 10px; }
-        .content { padding: 35px 30px; }
+        body { background: linear-gradient(135deg, #1d3557 0%, #457b9d 100%); min-height: 100vh; padding: 15px; display: flex; justify-content: center; align-items: flex-start; }
+        .container { background: white; width: 100%; max-width: 900px; border-radius: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); overflow: hidden; margin-top: 20px; margin-bottom: 20px;}
+        
+        .header { background: var(--primary); color: white; padding: 30px; text-align: center; }
+        .header h1 { font-size: 24px; margin-bottom: 8px; letter-spacing: 1px; }
+        .header p { font-size: 14px; opacity: 0.9; }
 
-        .screen { display: none; animation: fadeIn 0.4s ease-in; }
+        .content { padding: 40px 30px; }
+        .screen { display: none; animation: fadeIn 0.4s; }
         .screen.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .info-card { background: #f8f9fa; border-radius: 12px; padding: 25px; margin-bottom: 30px; border: 1px solid var(--border-color); }
-        .info-card-title { color: var(--primary-color); font-size: 18px; font-weight: 700; margin-bottom: 15px; }
-        .info-list li { padding: 6px 0 6px 25px; color: var(--text-dark); position: relative; font-size: 15px; }
-        .info-list li::before { content: '■'; position: absolute; left: 0; color: var(--primary-color); font-size: 12px; top: 10px; }
+        /* 表单样式 */
+        .info-card { background: #f1faee; border-left: 5px solid #2a9d8f; padding: 20px; border-radius: 0 8px 8px 0; margin-bottom: 30px; }
+        .info-card p { color: #1d3557; font-size: 14px; margin-bottom: 8px; font-weight: 500;}
         
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
         .form-group { display: flex; flex-direction: column; }
-        .form-label { font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-dark); }
-        .form-input { padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 15px; }
-        .form-input:focus { border-color: var(--primary-color); outline: none; }
-        
-        .btn { background: var(--primary-color); color: white; border: none; padding: 15px 30px; font-size: 16px; border-radius: 8px; cursor: pointer; font-weight: 700; width: 100%; max-width: 350px; display: block; margin: 0 auto; transition: 0.2s; }
-        .btn:hover { background: var(--primary-dark); transform: translateY(-2px); }
-        .btn-secondary { background: #6c757d; }
-        .btn-secondary:hover { background: #495057; }
-        .navigation { display: flex; gap: 15px; margin-top: 30px; }
+        .form-group label { font-size: 14px; font-weight: bold; color: var(--text-main); margin-bottom: 8px; }
+        .form-control { padding: 12px 15px; border: 2px solid var(--border); border-radius: 8px; font-size: 15px; transition: 0.3s; }
+        .form-control:focus { border-color: var(--primary); outline: none; }
+        .full-width { grid-column: 1 / -1; }
 
-        .timer-bar { position: fixed; top: 0; left: 0; right: 0; height: 50px; background: rgba(255,255,255,0.95); box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; z-index: 100; }
-        .timer-text { color: var(--primary-color); font-size: 20px; font-weight: 700; margin-left: 10px; }
-        
-        .test-container { margin-top: 40px; }
-        .progress-bar { height: 8px; background: #e9ecef; border-radius: 4px; margin: 15px 0 30px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--primary-color); width: 0%; transition: 0.3s; }
+        .btn { background: var(--primary); color: white; border: none; padding: 14px 30px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; width: 100%; display: block; }
+        .btn:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(230,57,70,0.3); }
+        .btn-outline { background: white; color: var(--text-muted); border: 2px solid var(--border); }
+        .btn-outline:hover { background: var(--bg-color); color: var(--text-main); transform: none; box-shadow: none;}
 
-        .question-card { background: #fff; border: 2px solid #e9ecef; border-radius: 12px; padding: 30px; }
-        .question-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; border-bottom: 2px solid #f1f3f5; padding-bottom: 15px; }
-        .badge { padding: 6px 12px; border-radius: 15px; font-size: 12px; font-weight: 600; }
-        .badge-normal { background: #e7f5ff; color: #1864ab; }
-        .badge-math { background: #f3f0ff; color: #6741d9; }
+        /* 测试区域 */
+        .status-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid var(--border); }
+        .timer { font-size: 20px; font-weight: bold; color: var(--primary); }
+        .progress-text { font-size: 14px; color: var(--text-muted); font-weight: bold; }
         
-        .question-text { font-size: 18px; color: var(--text-dark); margin-bottom: 25px; font-weight: 500; }
-        .math-text { font-size: 26px; font-weight: 700; color: #1971c2; text-align: center; background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 25px; }
-        
-        .option { background: #f8f9fa; border: 2px solid #e9ecef; padding: 15px; border-radius: 8px; margin-bottom: 10px; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
-        .option:hover { border-color: var(--primary-color); background: #fff5f5; }
-        .option.selected { border-color: var(--primary-color); background: #ffe5e5; }
-        .option-radio { width: 18px; height: 18px; accent-color: var(--primary-color); }
+        .question-box { min-height: 250px; }
+        .q-tag { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 15px; background: #e7f5ff; color: #1864ab; }
+        .q-text { font-size: 19px; color: var(--text-main); font-weight: 600; margin-bottom: 25px; line-height: 1.6; }
+        .q-math { font-size: 28px; font-weight: 800; color: #2b2d42; text-align: center; background: #f8f9fa; padding: 25px; border-radius: 10px; margin-bottom: 25px; letter-spacing: 2px;}
 
-        /* 结果评估样式 */
-        .result-status-card { text-align: center; padding: 40px 20px; border-radius: 12px; margin-bottom: 30px; color: white; }
-        .status-pass { background: linear-gradient(135deg, #2b8a3e, #08a045); }
-        .status-fail { background: linear-gradient(135deg, #c92a2a, #e03131); }
-        .status-invalid { background: linear-gradient(135deg, #e67700, #f08c00); }
-        .status-title { font-size: 36px; font-weight: 800; margin-bottom: 10px; letter-spacing: 2px; }
-        
-        .analysis-section { border: 2px solid var(--border-color); border-radius: 12px; padding: 25px; margin-bottom: 20px; }
-        .analysis-title { font-size: 18px; font-weight: 700; color: var(--text-dark); margin-bottom: 15px; border-left: 4px solid var(--primary-color); padding-left: 10px; }
-        .analysis-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px dashed #dee2e6; }
-        .analysis-item:last-child { border-bottom: none; }
-        .label-danger { color: var(--danger-color); font-weight: 700; }
-        .label-success { color: var(--success-color); font-weight: 700; }
-        .label-warning { color: var(--warning-color); font-weight: 700; }
+        .opt-list { display: grid; gap: 12px; }
+        .opt-item { padding: 16px 20px; border: 2px solid var(--border); border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 16px; color: var(--text-main); display: flex; align-items: center;}
+        .opt-item:hover { border-color: var(--primary); background: #fff5f5; }
+        .opt-item.active { border-color: var(--primary); background: #ffe5e5; font-weight: bold; box-shadow: 0 4px 10px rgba(230,57,70,0.1);}
+        .opt-item input { margin-right: 12px; accent-color: var(--primary); transform: scale(1.2);}
 
-        @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } .navigation { flex-direction: column; } }
+        .nav-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 35px; }
+
+        /* 结果评估区域 */
+        .res-card { text-align: center; padding: 40px 20px; border-radius: 12px; margin-bottom: 30px; color: white; }
+        .pass { background: linear-gradient(135deg, #2b8a3e, #08a045); }
+        .fail { background: linear-gradient(135deg, #c92a2a, #e03131); }
+        .res-title { font-size: 32px; font-weight: 800; margin-bottom: 10px; }
+        
+        .res-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        .res-item { display: flex; justify-content: space-between; align-items: center; padding: 18px; background: var(--bg-color); border-radius: 8px; border-left: 4px solid var(--primary); }
+        .res-label { font-weight: 600; color: var(--text-main); }
+        .res-val { font-weight: 800; font-size: 18px; }
+        
+        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="header-title">专职消防员招录 心理与适应性测试</div>
-            <div style="font-size: 14px; opacity: 0.9;">Copyright © 忠县消防救援大队</div>
-        </div>
 
-        <div class="content">
-            <div class="screen active" id="welcomeScreen">
-                <div class="info-card">
-                    <div class="info-card-title">系统说明</div>
-                    <ul class="info-list">
-                        <li><strong>测评视角：</strong>题目贴合专职消防员招录的真实场景。</li>
-                        <li><strong>智能风控：</strong>系统内置“专注度检测”与“掩饰性说谎检测”。</li>
-                        <li><strong>合格判定：</strong>非单一算分，系统将综合行为轨迹进行一票否决式判定。</li>
-                        <li><strong>请注意：</strong>如被系统判定为“乱答题”或“刻意伪装”，成绩将直接作废。</li>
-                    </ul>
-                </div>
-
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label class="form-label">姓名</label>
-                        <input type="text" class="form-input" id="cName" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">身份证号</label>
-                        <input type="text" class="form-input" id="cId" maxlength="18" required>
-                    </div>
-                </div>
-                <button class="btn" onclick="startTest()">确认本人作答，开始测试</button>
-            </div>
-
-            <div class="screen" id="testScreen">
-                <div class="timer-bar">⏱️ 倒计时 <span class="timer-text" id="timer">30:00</span></div>
-                <div class="test-container">
-                    <div style="display: flex; justify-content: space-between; font-size: 14px; color: #6c757d;">
-                        <span>进度: <strong id="qProgress" style="color:var(--primary-color)">1/70</strong></span>
-                    </div>
-                    <div class="progress-bar"><div class="progress-fill" id="pFill"></div></div>
-                    
-                    <div class="question-card" id="qCard"></div>
-                    
-                    <div class="navigation">
-                        <button class="btn btn-secondary" onclick="prevQ()" id="prevBtn">上一题</button>
-                        <button class="btn" onclick="nextQ()" id="nextBtn">下一题</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="screen" id="resultScreen">
-                <div class="result-status-card" id="statusCard">
-                    <div class="status-title" id="statusTitle">评估中...</div>
-                    <div id="statusDesc" style="font-size: 16px; opacity: 0.9;">正在生成系统鉴定报告</div>
-                </div>
-
-                <div class="analysis-section">
-                    <div class="analysis-title">🕵️ 答题行为分析 (风控检测)</div>
-                    <div class="analysis-item">
-                        <span>专注度检测 (防乱答题)：</span>
-                        <span id="resAttention">正在分析...</span>
-                    </div>
-                    <div class="analysis-item">
-                        <span>真实性检测 (防刻意伪装)：</span>
-                        <span id="resLie">正在分析...</span>
-                    </div>
-                </div>
-
-                <div class="analysis-section">
-                    <div class="analysis-title">📊 核心素质评估</div>
-                    <div class="analysis-item">
-                        <span>心理与情绪红线 (一票否决项)：</span>
-                        <span id="resRedline">正在分析...</span>
-                    </div>
-                    <div class="analysis-item">
-                        <span>纪律服从意识评估：</span>
-                        <span id="resDiscipline">正在分析...</span>
-                    </div>
-                    <div class="analysis-item">
-                        <span>高压环境基础算数：</span>
-                        <span id="resMath">正在分析...</span>
-                    </div>
-                    <div class="analysis-item">
-                        <span>MBTI 队伍融入倾向：</span>
-                        <span id="resMbti" style="font-weight: bold; color: var(--primary-color);">计算中...</span>
-                    </div>
-                </div>
-
-                <button class="btn" style="margin-top: 20px;" onclick="downloadReport()">📥 导出政工考核专用报告</button>
-            </div>
-        </div>
+<div class="container">
+    <div class="header">
+        <h1>心理潜质与职业适配度测试</h1>
+        <p>基于隐喻投射心理学模型，挖掘真实性格底色</p>
     </div>
 
-    <script>
-        // ==========================================
-        // 应聘者视角题库 (支持乱答检测、掩饰检测、选项打乱)
-        // ==========================================
-        const qPool = [
-            // --- 1. 注意力检测 (防乱答，必须答对，否则直接作废) ---
-            { id: 11, text: "为了系统测试您的专注度，请您在本题直接选择“不太符合”选项，不要选其他的。", category: "attention", type: "psych", options: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], correctIndex: 1 },
-            { id: 12, text: "这是一道注意力测试题，为了证明您在认真读题，请选择“比较符合”。", category: "attention", type: "psych", options: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], correctIndex: 3 },
-
-            // --- 2. 掩饰性检测 (Lie Scale - 防完美伪装。选极好的计1分) ---
-            { id: 21, text: "从小到大，我连一次懒觉都没有睡过，每天都准时起床。", category: "lie", type: "psych", options: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [0,0,0,1,1] },
-            { id: 22, text: "我从来没有在背后抱怨过任何领导或老师的一句坏话。", category: "lie", type: "psych", options: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [0,0,0,1,1] },
-            { id: 23, text: "即使别人对我发极大的脾气，我也从来没有产生过哪怕一丝生气的念头。", category: "lie", type: "psych", options: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [0,0,0,1,1] },
-            { id: 24, text: "我这一生中，从来没有犯过任何一个小错误。", category: "lie", type: "psych", options: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [0,0,0,1,1] },
-            { id: 25, text: "我答应别人的事，无论遇到多大的不可抗力，我都百分之百做到了。", category: "lie", type: "psych", options: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [0,0,0,1,1] },
-            { id: 26, text: "我从来没有过拖延的习惯，所有的事都会立刻去办。", category: "lie", type: "psych", options: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [0,0,0,1,1] },
-
-            // --- 3. 心理红线 (冲动/抑郁/创伤，新兵视角，0分触发一票否决) ---
-            { id: 31, text: "如果集训时因为动作慢被老班长严厉训斥，我会产生脱衣服不干了甚至想动手的冲动。", category: "redline", type: "psych", options: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [5,4,3,1,0] },
-            { id: 32, text: "我觉得生活极其没有希望，每天都提不起精神去面对任何训练或工作。", category: "redline", type: "psych", options: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [5,4,3,1,0] },
-            { id: 33, text: "想到以后可能会在救援现场看到血肉模糊的画面，我现在就紧张得喘不过气、浑身发抖。", category: "redline", type: "psych", options: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [5,4,3,1,0] },
-            { id: 34, text: "在极度疲劳或压力极大的时候，我经常有想要砸碎身边物品来发泄的强烈冲动。", category: "redline", type: "psych", options: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [5,4,3,1,0] },
-            { id: 35, text: "我曾经有过想要结束自己生命的念头，或者觉得死了比活着轻松。", category: "redline", type: "psych", options: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [5,4,3,1,0] },
-            { id: 36, text: "和别人发生口角时，我很难控制住自己，经常演变成激烈的肢体冲突。", category: "redline", type: "psych", options: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [5,4,3,1,0] },
-            { id: 37, text: "只要处于狭小黑暗的空间内，我就会瞬间陷入恐慌，完全失去理智。", category: "redline", type: "psych", options: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [5,4,3,1,0] },
-            // ... 可在此继续添加红线题，系统抽选15题
-
-            // --- 4. 纪律与服从 (新人视角，满分5分) ---
-            { id: 41, text: "作为新入职人员，当你认为班长下达的清扫任务分配极不公平时，你会：", category: "discipline", type: "psych", options: ["当场拒绝执行，找班长理论", "先按要求服从并完成，事后再私下反映", "表面答应，背地里磨洋工"], scores: [0,5,1] },
-            { id: 42, text: "周末请假外出，但队里突然打来电话说有紧急任务要求归队，而你的电影刚开场：", category: "discipline", type: "psych", options: ["立刻起身，寻找最快交通工具归队", "看完这场电影再回去，反正也不差这一两小时", "假装没听到电话，或者说在很远的地方赶不回"], scores: [5,1,0] },
-            { id: 43, text: "你对新兵连要求把被子叠成“豆腐块”、洗漱用品必须摆放成一条线这种规定怎么看？", category: "discipline", type: "psych", options: ["完全是浪费时间的折磨，毫无意义", "虽然枯燥，但明白这是为了培养绝对服从和纪律意识，坚决执行", "应付差事，等检查过了就随便放"], scores: [0,5,2] },
-            { id: 44, text: "半夜睡得正熟，突然拉响了紧急集合警报，你的第一反应是：", category: "discipline", type: "psych", options: ["抱怨几句，慢吞吞地穿衣服", "条件反射般跃起，按要求迅速着装列队", "躲在被子里假装没听见，看别人怎么做"], scores: [1,5,0] },
-            { id: 45, text: "当你发现同寝室的新队友私藏了违规电器（如大功率电暖器）时：", category: "discipline", type: "psych", options: ["当没看见，大家都是新人别得罪人", "立刻提醒他这是严重违纪并让他交上去，不听则报告班长", "觉得挺好，自己也跟着一起用"], scores: [1,5,0] },
-            // ... 抽选10题
-
-            // --- 5. MBTI (队伍融入视角) ---
-            { id: 51, text: "新训队第一天，面对一屋子都不认识的新室友，你通常会：", category: "mbti_ei", type: "mbti", options: ["主动热情地打招呼，和大家迅速熟络起来", "默默收拾自己的床铺，等别人先开口找你聊天"], values: ["E", "I"] },
-            { id: 52, text: "训练结束后的休息时间，你更喜欢：", category: "mbti_ei", type: "mbti", options: ["和队友们聚在一起吹牛聊天、打篮球", "找个安静的角落自己待着，刷手机或听歌恢复精力"], values: ["E", "I"] },
-            { id: 53, text: "当班长教大家使用一款复杂的新型破拆工具时，你倾向于：", category: "mbti_sn", type: "mbti", options: ["认真记住班长教的每一个具体操作步骤和安全动作", "先去理解这个工具的机械原理，搞懂它为什么能这样破拆"], values: ["S", "N"] },
-            { id: 54, text: "面对一项枯燥的体能训练任务，你的态度更倾向于：", category: "mbti_sn", type: "mbti", options: ["踏踏实实完成既定组数，关注当下的汗水和肌肉感觉", "一边练一边在脑海里想象自己变得极其强壮的未来画面"], values: ["S", "N"] },
-            { id: 55, text: "如果有两位新队友因为抢洗澡间发生了争吵，你去劝架会：", category: "mbti_tf", type: "mbti", options: ["直接指出谁不守规矩，用队里的纪律来定对错", "先安抚他俩的情绪，说句好话把气氛缓和下来"], values: ["T", "F"] },
-            { id: 56, text: "当你被班长当众批评了，你内心最在意的是：", category: "mbti_tf", type: "mbti", options: ["班长批评的事实对不对，逻辑上有没有冤枉我", "班长的语气是不是太伤人了，有没有给我留面子"], values: ["T", "F"] },
-            { id: 57, text: "明天有一项重要的考核，你今晚会：", category: "mbti_jp", type: "mbti", options: ["把明天要用的装备、衣服全部提前整理好放在床头", "不急，明天早起几分钟随便抓起装备去就行"], values: ["J", "P"] },
-            { id: 58, text: "你对宿舍自己储物柜的管理方式是：", category: "mbti_jp", type: "mbti", options: ["严格分类，什么东西该放在哪儿心里清清楚楚", "东西随意塞进去，只要关得上门、自己能翻到就行"], values: ["J", "P"] }
-            // ... 抽选 25-30题
-        ];
-
-        // --- 6. 算数题库 (正确答案在索引上的分布经过纯手工打乱，告别全选C) ---
-        const mathPool = [
-            { id: 91, text: "15 + 27 = ?", type: "math", ans: 42, opts: ["42", "41", "40", "43"] }, // A (0)
-            { id: 92, text: "56 - 29 = ?", type: "math", ans: 27, opts: ["25", "27", "26", "28"] }, // B (1)
-            { id: 93, text: "8 × 9 = ?", type: "math", ans: 72, opts: ["63", "70", "72", "81"] },   // C (2)
-            { id: 94, text: "144 ÷ 12 = ?", type: "math", ans: 12, opts: ["10", "11", "14", "12"] },  // D (3)
-            { id: 95, text: "35 + 48 - 19 = ?", type: "math", ans: 64, opts: ["64", "63", "65", "66"] }, // A (0)
-            { id: 96, text: "6 × 7 + 8 = ?", type: "math", ans: 50, opts: ["48", "50", "49", "51"] },   // B (1)
-            { id: 97, text: "100 - 36 + 15 = ?", type: "math", ans: 79, opts: ["77", "78", "79", "80"] },// C (2)
-            { id: 98, text: "18 × 3 ÷ 6 = ?", type: "math", ans: 9, opts: ["7", "8", "10", "9"] },      // D (3)
-            { id: 99, text: "250 ÷ 5 - 20 = ?", type: "math", ans: 30, opts: ["30", "28", "29", "31"] }, // A (0)
-            { id: 100, text: "45 + 36 - 27 + 18 = ?", type: "math", ans: 72, opts: ["71", "72", "73", "74"] } // B (1)
-        ];
-
-        let questions = [], answers = [], currQ = 0;
-        let timer, timeLeft = 30 * 60;
-        let candInfo = {};
-        let repData = {};
-
-        function shuffle(arr) {
-            let a = [...arr];
-            for(let i=a.length-1; i>0; i--){
-                const j = Math.floor(Math.random()*(i+1));
-                [a[i], a[j]] = [a[j], a[i]];
-            }
-            return a;
-        }
-
-        function buildPaper() {
-            // 组卷策略 (总计70题，因展示代码篇幅限制，此处使用现有题库循环补充，实际使用中只需扩充上面的常量数组即可)
-            let atts = qPool.filter(q=>q.category==='attention').slice(0,2);
-            let lies = qPool.filter(q=>q.category==='lie').slice(0,5);
-            let reds = shuffle(qPool.filter(q=>q.category==='redline')).slice(0,15); 
-            // 若题不够循环凑数保证架构运行
-            while(reds.length < 15) reds.push(reds[Math.floor(Math.random()*reds.length)]);
+    <div class="content">
+        <div class="screen active" id="screen-welcome">
+            <div class="info-card">
+                <p>⚠️ 郑重声明：</p>
+                <p>1. 本系统引入防伪装测试，系统将通过“生活习惯隐喻”判断您的真实性格。凭第一直觉作答即可，刻意猜测所谓“好答案”将导致成绩被判定为【伪装无效】。</p>
+                <p>2. 诚信机制：每个身份证号一生仅限作答一次，请认真对待。</p>
+            </div>
             
-            let discs = shuffle(qPool.filter(q=>q.category==='discipline')).slice(0,10);
-            while(discs.length < 10) discs.push(discs[Math.floor(Math.random()*discs.length)]);
-            
-            let mbtis = shuffle(qPool.filter(q=>q.type==='mbti')).slice(0,28);
-            while(mbtis.length < 28) mbtis.push(mbtis[Math.floor(Math.random()*mbtis.length)]);
-
-            let maths = shuffle(mathPool).slice(0,10);
-
-            let part1 = shuffle([...atts, ...lies, ...reds, ...discs, ...mbtis]);
-            return [...part1, ...maths];
-        }
-
-        function startTest() {
-            const name = document.getElementById('cName').value.trim();
-            const id = document.getElementById('cId').value.trim();
-            if(!name || !/^\d{17}[\dXx]$/.test(id)) return alert("请输入有效姓名和18位身份证号");
-            
-            candInfo = { name, id };
-            questions = buildPaper();
-            answers = new Array(70).fill(null);
-            
-            document.getElementById('welcomeScreen').classList.remove('active');
-            document.getElementById('testScreen').classList.add('active');
-            
-            timer = setInterval(() => {
-                timeLeft--;
-                document.getElementById('timer').textContent = `${Math.floor(timeLeft/60)}:${(timeLeft%60).toString().padStart(2,'0')}`;
-                if(timeLeft <= 0) { clearInterval(timer); calcResult(); }
-            }, 1000);
-            renderQ();
-        }
-
-        function renderQ() {
-            const q = questions[currQ];
-            const qc = document.getElementById('qCard');
-            let isMath = q.type === 'math';
-            
-            qc.innerHTML = `
-                <div class="question-header">
-                    <div style="background:var(--primary-color);color:white;padding:4px 10px;border-radius:4px;font-weight:bold;">第 ${currQ+1} 题</div>
-                    <div class="badge ${isMath?'badge-math':'badge-normal'}">${isMath?'算数测试':'综合评估'}</div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>真实姓名 *</label>
+                    <input type="text" id="ipt-name" class="form-control" placeholder="请输入姓名">
                 </div>
-                <div class="${isMath?'math-text':'question-text'}">${q.text}</div>
-                <div>
-                    ${(isMath?q.opts:q.options).map((opt, idx) => `
-                        <div class="option ${answers[currQ]===idx?'selected':''}" onclick="answers[currQ]=${idx};renderQ()">
-                            <input type="radio" class="option-radio" ${answers[currQ]===idx?'checked':''}>
-                            <span>${opt}</span>
-                        </div>
-                    `).join('')}
+                <div class="form-group">
+                    <label>联系电话 *</label>
+                    <input type="tel" id="ipt-phone" class="form-control" placeholder="11位手机号" maxlength="11">
                 </div>
-            `;
-            document.getElementById('qProgress').textContent = `${currQ+1}/70`;
-            document.getElementById('pFill').style.width = ((currQ+1)/70*100)+'%';
-            document.getElementById('prevBtn').style.display = currQ===0?'none':'block';
-            document.getElementById('nextBtn').textContent = currQ===69?'交卷':'下一题';
+                <div class="form-group full-width">
+                    <label>身份证号码 *</label>
+                    <input type="text" id="ipt-id" class="form-control" placeholder="18位身份证号码" maxlength="18">
+                </div>
+            </div>
+            <button class="btn" onclick="startTest()">承诺本人作答，开始测试</button>
+        </div>
+
+        <div class="screen" id="screen-test">
+            <div class="status-bar">
+                <div class="progress-text">进度: <span id="txt-prog" style="color:var(--primary);font-size:18px;">1/70</span></div>
+                <div class="timer" id="txt-time">30:00</div>
+            </div>
+            <div class="question-box" id="q-box">
+                </div>
+            <div class="nav-buttons">
+                <button class="btn btn-outline" id="btn-prev" onclick="goPrev()">上一题</button>
+                <button class="btn" id="btn-next" onclick="goNext()">下一题</button>
+            </div>
+        </div>
+
+        <div class="screen" id="screen-result">
+            <div class="res-card" id="res-banner">
+                <div class="res-title" id="res-status">评估中...</div>
+                <div style="font-size: 16px; opacity: 0.9;" id="res-desc">正在生成深度性格画像</div>
+            </div>
+
+            <div class="res-grid">
+                <div class="res-item" style="border-left-color: #fca311;">
+                    <span class="res-label">🕵️ 答题真实度 (防伪装检测)</span>
+                    <span class="res-val" id="val-lie" style="color: #fca311;">检测中</span>
+                </div>
+                <div class="res-item" style="border-left-color: #e63946;">
+                    <span class="res-label">🚨 极端情绪与压力红线</span>
+                    <span class="res-val" id="val-red" style="color: #e63946;">检测中</span>
+                </div>
+                <div class="res-item" style="border-left-color: #2a9d8f;">
+                    <span class="res-label">🛡️ 纪律与规则意识潜质</span>
+                    <span class="res-val" id="val-disc" style="color: #2a9d8f;">计算中</span>
+                </div>
+                <div class="res-item" style="border-left-color: #457b9d;">
+                    <span class="res-label">🧠 潜意识职业性格 (MBTI)</span>
+                    <span class="res-val" id="val-mbti" style="color: #457b9d;">计算中</span>
+                </div>
+                <div class="res-item" style="border-left-color: #6c757d;">
+                    <span class="res-label">🧮 基础抗干扰算数正确率</span>
+                    <span class="res-val" id="val-math" style="color: #6c757d;">0/10</span>
+                </div>
+            </div>
+            <button class="btn" style="margin-top: 30px;" onclick="downloadData()">📥 导出政工专用研判报告</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ==========================================
+// 核心题库：全面采用投射测验与侧面隐喻设计
+// 题量：精心设计的70道不重复题库（60道心理/投射题 + 10道数学题）
+// ==========================================
+const psychPool = [
+    // --- 测谎与专注度 (6题) ---
+    { id: 1, text: "我从小到大，脑海里从来没有闪过哪怕一次放弃的念头。", cat: "lie", opts: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [0,0,0,1,1] },
+    { id: 2, text: "我这一生中，从未对任何人说过一句谎话，哪怕是善意的谎言。", cat: "lie", opts: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [0,0,0,1,1] },
+    { id: 3, text: "即使别人故意激怒我、羞辱我，我也从来不会有一丝一毫的生气。", cat: "lie", opts: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [0,0,0,1,1] },
+    { id: 4, text: "我从来没有在背后抱怨过任何制度或任何人的不好。", cat: "lie", opts: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], scores: [0,0,0,1,1] },
+    { id: 5, text: "【系统检测】为了证明您在专注答题，请直接选择“不太符合”。", cat: "att", opts: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], correct: 1 },
+    { id: 6, text: "【系统检测】这也是一道注意力测试题，请直接选择“比较符合”。", cat: "att", opts: ["完全不符合", "不太符合", "不确定", "比较符合", "完全符合"], correct: 3 },
+
+    // --- 纪律与服从投射 (隐喻题，14题，满分70分) ---
+    // 侧面测试：重规则 vs 随性
+    { id: 101, text: "您在网上购买了一套结构非常复杂的拼装家具，拆开包装后，您的习惯是：", cat: "disc", opts: ["先把说明书从头到尾看一遍，清点完所有零件再动手", "边看图纸边找零件，遇到不懂的再翻说明书", "不看说明书，直接按自己的直觉拼，拼错了再拆"], scores: [5,2,0] },
+    { id: 102, text: "如果您要为自己规划一次为期5天的长途旅行，您的计划方式更像：", cat: "disc", opts: ["精确到每天去哪、几点吃饭、车票酒店提前订好", "定个大概目的地和必去景点，其他的走到哪算哪", "完全不计划，买张票直接走，追求未知"], scores: [5,2,0] },
+    { id: 103, text: "平时在家打扫卫生，如果发现衣柜背后有个极其隐蔽、平时根本看不见的死角有灰尘：", cat: "disc", opts: ["觉得心里不舒服，必须想办法把它彻底清理干净", "反正平时看不见，大扫除的时候再管", "假装没看见，只要外面干净就行"], scores: [5,2,0] },
+    { id: 104, text: "您的手机桌面APP图标，平时的排列状态通常是：", cat: "disc", opts: ["严格按照功能或颜色分类，放进不同的文件夹里", "常用的放在首页，不常用的随便堆在后面", "完全无序，找软件全靠搜索功能"], scores: [5,2,0] },
+    { id: 105, text: "在一场团队网络游戏中，队长下达了一个你认为胜算极低的战术指令，此时：", cat: "disc", opts: ["不管输赢，坚决执行队长的战术，保证团队步调一致", "嘴上答应，但行动时偷偷掺杂自己的想法", "直接开麦反驳，要求大家按自己的聪明想法打"], scores: [5,1,0] },
+    { id: 106, text: "过马路时，面对红灯但左右完全没有车辆和摄像头，您的下意识行为是：", cat: "disc", opts: ["坚决等待绿灯亮起，哪怕站着发呆", "观察确信安全后，快速走过去", "跟着其他闯红灯的人一起过去"], scores: [5,1,0] },
+    { id: 107, text: "如果您被分配去负责一个仓库的物资登记，面对繁琐的出入库表格：", cat: "disc", opts: ["拿一支笔、拿一根尺子，横平竖直地严格记录每一笔", "差不多记录个大概数量就行，没人细看", "觉得太麻烦，凭脑子记，月底随便编一下应付交差"], scores: [5,1,0] },
+    { id: 108, text: "去参加一个并非很重要的朋友聚会，约定的时间是晚上6点，您通常会：", cat: "disc", opts: ["提前10分钟到达现场", "刚好6点左右到", "晚到十几分钟无所谓"], scores: [5,2,0] },
+    { id: 109, text: "当你正在看一部极其精彩的悬疑电影大结局，突然接到了单位的一个非紧急通知电话：", cat: "disc", opts: ["立刻暂停电影，集中注意力接听并记录", "一边眼睛盯着屏幕，一边嘴里“嗯嗯”应付", "直接按掉，等看完电影再回拨过去"], scores: [5,1,0] },
+    { id: 110, text: "对于“无规矩不成方圆”这句话，您内心的真实感触是：", cat: "disc", opts: ["深以为然，规则是社会高效运转的唯一基石", "有一定道理，但规矩有时候太死板，需要变通", "认为这句话是用来限制人的工具，很反感"], scores: [5,2,0] },
+    { id: 111, text: "做饭时，如果菜谱上写着“加入盐5克、酱油10毫升”：", cat: "disc", opts: ["会刻意去找量勺，尽量做到精准", "凭感觉随便倒一点，尝尝咸淡再加", "完全不看菜谱，想怎么放怎么放"], scores: [5,2,0] },
+    { id: 112, text: "如果在路上捡到一个装有少量现金但没有证件的旧钱包：", cat: "disc", opts: ["交到附近的警察局或失物招领处", "留在原地不管", "拿走里面的现金把钱包扔了"], scores: [5,2,0] },
+    { id: 113, text: "面对一份有着严格排版要求（字体大小、行距）的报告文件：", cat: "disc", opts: ["在写字前就先设置好所有格式，严格按照模板来", "先随便写完，最后再统一调整格式", "差不多就行了，内容才是最重要的"], scores: [5,3,1] },
+    { id: 114, text: "当您发现一个可以轻易绕过系统限制而不被发现的捷径时，您会：", cat: "disc", opts: ["拒绝使用，因为这不符合合规流程", "如果能提高效率就用一下，反正没人知道", "经常寻找这种捷径来偷懒"], scores: [5,1,0] },
+
+    // --- 压力与情绪红线投射 (隐喻题，15题，反向计分，0分触发预警) ---
+    // 侧面测试：冲动控制、抗压能力、创伤倾向
+    { id: 201, text: "看着耳机线死死地缠绕打结成一团，您身体本能的第一反应是：", cat: "red", opts: ["深吸一口气，从线头开始慢慢理顺", "觉得有些麻烦，但还是能解开", "瞬间觉得胸口发闷、极其烦躁，甚至想拿剪刀剪断"], scores: [5,3,0] },
+    { id: 202, text: "在一款带有紧张倒计时音效的电脑游戏中，时间快结束时您的生理状态：", cat: "red", opts: ["精神高度集中，手速变快，反而有些兴奋", "比较紧张，但还能操作", "心跳极快，手指发抖僵硬，大脑一片空白，甚至想直接关掉游戏"], scores: [5,3,0] },
+    { id: 203, text: "如果有人在公共场合，仅仅因为误会而对您大声斥责指着您的鼻子骂：", cat: "red", opts: ["冷静地向周围人解释情况，不和对方对骂", "很生气，大声和他争辩回去", "控制不住情绪，立刻上前推搡对方甚至想动手打人"], scores: [5,2,0] },
+    { id: 204, text: "看一部以悲剧结尾、极度压抑的电影后，您的状态通常是：", cat: "red", opts: ["感叹一下剧情，一两个小时后就彻底出戏了", "心情沉重半天左右", "连续好几天情绪低落，觉得人生毫无意义，甚至严重影响睡眠"], scores: [5,3,0] },
+    { id: 205, text: "在拥挤的公交车上，有人重重踩了您一脚却完全没有道歉：", cat: "red", opts: ["提醒对方注意一下，就算了", "心里暗骂一句，但忍住了", "立刻火冒三丈，狠狠踩回去或者破口大骂"], scores: [5,3,0] },
+    { id: 206, text: "如果在短视频里突然刷到极其血腥、器官外露的真实车祸画面，您的生理反应：", cat: "red", opts: ["觉得比较惨，迅速划走", "感到不适，皱起眉头", "瞬间头晕目眩、恶心想吐，甚至长时间不敢闭眼睡觉"], scores: [5,3,0] },
+    { id: 207, text: "当您为了一个项目连续熬夜三天，极度疲惫时，电脑突然死机文件没保存：", cat: "red", opts: ["叹口气，喝口冷水，尝试重启找回文件", "非常沮丧，抱怨几句", "彻底崩溃，抓狂地猛砸键盘或鼠标，甚至想毁掉电脑"], scores: [5,3,0] },
+    { id: 208, text: "对于高处（如站在五层楼没有任何护栏的天台边缘往下看）：", cat: "red", opts: ["有点忌惮，但只要小心点觉得可以接受", "觉得腿发软，不敢靠近边缘", "只要想到那个画面就手心出汗、呼吸困难，绝对不可能去"], scores: [5,2,0] },
+    { id: 209, text: "半夜一个人走在没有路灯、只有风声的陌生树林里，您的感觉：", cat: "red", opts: ["保持警惕，加快脚步走出去", "有点害怕，但能控制住情绪", "陷入极度恐慌，幻想各种怪物，甚至吓得不敢动弹"], scores: [5,3,0] },
+    { id: 210, text: "遇到一点生活中的小挫折（如错过了最后一班车）时，您的内心独白更偏向：", cat: "red", opts: ["“真倒霉，赶紧查查其他路线吧”", "“烦死了，今天怎么事事不顺”", "“我真是个没用的人，活着就是一种受罪”"], scores: [5,3,0] },
+    { id: 211, text: "如果在一间几乎完全黑暗、极其狭窄、只能转身的杂物间里待10分钟：", cat: "red", opts: ["闭上眼睛休息一会儿，觉得无所谓", "觉得压抑不舒服", "会感觉无法呼吸，疯狂想要砸门逃出去"], scores: [5,3,0] },
+    { id: 212, text: "排了半小时的长队，突然有个人理直气壮地插在您前面：", cat: "red", opts: ["拍拍他，严肃要求他去后面排队", "大声指责他，让他下不来台", "气血上涌，直接一把将他暴力推开或拉扯出来"], scores: [5,2,0] },
+    { id: 213, text: "当别人对您的一个无关紧要的小缺点开玩笑时：", cat: "red", opts: ["跟着一起笑笑自嘲一下", "觉得有点尴尬，但不表露", "觉得自尊心受到极大侮辱，立刻翻脸发大火"], scores: [5,3,0] },
+    { id: 214, text: "最近几个月，您对以前非常喜欢的爱好（如打球、打游戏、看书）：", cat: "red", opts: ["依然保持热情，经常去做", "因为太忙做得少了，但偶尔还会做", "彻底失去兴趣，觉得世界上的任何事都毫无意义"], scores: [5,3,0] },
+    { id: 215, text: "在极速下降的过山车或跳楼机上，您的状态通常是：", cat: "red", opts: ["享受失重的刺激，大声欢呼", "闭着眼睛忍耐", "恐慌到大脑缺氧，感觉自己马上就要死掉了"], scores: [5,3,0] },
+
+    // --- MBTI 侧面投射题 (25题，通过日常隐喻映射四维倾向) ---
+    // E (外向/外部刺激) vs I (内向/内部消耗)
+    { id: 301, text: "如果必须选择一种植物放在办公桌上陪伴自己，您更倾向于选：", cat: "mbti", type: "EI", opts: ["生长迅速、开花鲜艳、需要经常浇水互动的向日葵或月季", "安静、生长缓慢、不需要经常打理的仙人掌或多肉植物"], vals: ["E", "I"] },
+    { id: 302, text: "去参加一个有几十人的行业交流大厅，您进门后的第一件事通常是：", cat: "mbti", type: "EI", opts: ["直奔人群最密集、讨论最热烈的地方，主动递名片打招呼", "走到边缘的饮水机或角落，先静静观察一下全场的情况"], vals: ["E", "I"] },
+    { id: 303, text: "如果让您在一款虚拟人生游戏中选择一个职业，您更愿意做：", cat: "mbti", type: "EI", opts: ["每天在大街上拉客、侃侃而谈、推销商品的超级销售员", "一个人在安静的图书馆里修复古籍的文物修复师"], vals: ["E", "I"] },
+    { id: 304, text: "经历了连续一周的高强度体力工作后，迎来了周末，对您来说最“回血”的方式是：", cat: "mbti", type: "EI", opts: ["把好朋友都叫出来，去吃一顿热闹的火锅、唱唱歌", "拉上窗帘，一个人在房间里安静地睡一觉、看看书或发呆"], vals: ["E", "I"] },
+    { id: 305, text: "在食堂排队打饭时，遇到前面是一个很久没见但只是半熟的旧同事：", cat: "mbti", type: "EI", opts: ["立刻大声打招呼，主动上前跟他聊聊近况", "如果他没看见我，我就假装看手机，避免强行寒暄的尴尬"], vals: ["E", "I"] },
+    { id: 306, text: "如果有情绪极其低落的时刻，您化解情绪的方式更像是：", cat: "mbti", type: "EI", opts: ["像水壶烧开了必须拔掉塞子一样，找人倾诉出来才舒服", "像受伤的动物一样，自己躲在洞穴里默默舔舐伤口慢慢消化"], vals: ["E", "I"] },
+
+    // S (实感/关注细节与当下) vs N (直觉/关注整体与未来)
+    { id: 307, text: "在欣赏一幅世界名画（如蒙娜丽莎）时，您的注意力最先被什么吸引？", cat: "mbti", type: "SN", opts: ["画作的色彩搭配、笔触的细节、衣物的纹理和光影", "这幅画背后的历史故事、作者当时的心境以及画作传递的神秘感"], vals: ["S", "N"] },
+    { id: 308, text: "当您向别人描述昨晚的一场梦境时，您的语言更偏向于：", cat: "mbti", type: "SN", opts: ["“我梦见走到一扇红色的木门前，门把手是铜的，旁边有一棵树……”", "“我梦见了一种极其压抑的感觉，好像整个世界都在往下掉……”"], vals: ["S", "N"] },
+    { id: 309, text: "看科幻小说时，您更喜欢哪种类型的设定？", cat: "mbti", type: "SN", opts: ["硬科幻：里面有严谨的物理公式、飞船的具体结构和详实的科技细节", "软科幻：主要探讨未来社会中人类的伦理、哲学以及宇宙的终极意义"], vals: ["S", "N"] },
+    { id: 310, text: "如果你是个厨师准备研发新菜：", cat: "mbti", type: "SN", opts: ["在前人成熟菜谱的基础上，微调油盐比例，做到极致的味道", "抛弃传统，把完全不搭嘎的食材混在一起，尝试前所未有的新概念"], vals: ["S", "N"] },
+    { id: 311, text: "在讨论工作方案时，最能让您感到踏实的是：", cat: "mbti", type: "SN", opts: ["别人给你提供了过去成功的真实案例和具体的数据支撑", "别人向你描绘了这个方案未来可能带来的宏大蓝图和愿景"], vals: ["S", "N"] },
+    { id: 312, text: "对于“苹果”这个词，您脑海中第一秒闪过的联想是：", cat: "mbti", type: "SN", opts: ["红色、圆的、吃起来脆脆的甜味、超市里的水果区", "牛顿的万有引力定律、乔布斯的科技公司、或者是某种健康生活的象征"], vals: ["S", "N"] },
+
+    // T (思考/重逻辑规则) vs F (情感/重和谐感受)
+    { id: 313, text: "如果在路边看到两只小狗在为了抢一块骨头打架，您内心的倾向是：", cat: "mbti", type: "TF", opts: ["自然界的生存法则就是弱肉强食，这是生物的本能竞争", "觉得弱小的那只很可怜，甚至想丢另一块骨头给它"], vals: ["T", "F"] },
+    { id: 314, text: "买了一件衣服穿出去朋友说不好看，您的第一反应是：", cat: "mbti", type: "TF", opts: ["低头看看衣服，分析朋友说得客观上对不对，哪里不好看", "心里觉得有些失落，觉得朋友说话太直接、不顾及自己的感受"], vals: ["T", "F"] },
+    { id: 315, text: "作为法官，面对一个因为给重病母亲买药而偷窃面包的人，您的内心倾向（抛开法律条文）：", cat: "mbti", type: "TF", opts: ["偷窃就是偷窃，不论动机如何，破坏了规则就必须受到同等惩罚", "情有可原，在惩罚时应该极大地考虑其动机，予以最大限度的宽大处理"], vals: ["T", "F"] },
+    { id: 316, text: "在评价一部战争电影的主角时，您更看重他：", cat: "mbti", type: "TF", opts: ["战略战术是否合理，指挥是否冷静高效，最终是否赢得了战役", "是否关爱士兵，是否展现了人性的光辉和对和平的渴望"], vals: ["T", "F"] },
+    { id: 317, text: "当朋友遇到感情问题来找你倒苦水，你通常的扮演的角色是：", cat: "mbti", type: "TF", opts: ["“分析师”：帮他梳理前因后果，指出他哪里做得不对，给出解决方案", "“共情者”：跟着他一起骂对方，递纸巾，先稳定他的情绪"], vals: ["T", "F"] },
+    { id: 318, text: "你认为维系一个优秀团队最核心的纽带是：", cat: "mbti", type: "TF", opts: ["绝对公平的赏罚制度和清晰的责任划分", "大家彼此信任、像家人一样的深厚感情"], vals: ["T", "F"] },
+
+    // J (判断/规划控制) vs P (感知/灵活随性)
+    { id: 319, text: "去超市买生活用品，您的路线更像是：", cat: "mbti", type: "JP", opts: ["列好清单，直奔相关货架，拿完付钱走人", "推着车漫无目的地逛，看到什么觉得不错就扔进购物车里"], vals: ["J", "P"] },
+    { id: 320, text: "如果你是一位作家，你的写作习惯更倾向于：", cat: "mbti", type: "JP", opts: ["先列好极其详细的大纲、人物设定、结局，然后按部就班地填词", "只有一个开头，跟着角色的感觉走，写到哪算哪，结局自己都不知道"], vals: ["J", "P"] },
+    { id: 321, text: "距离一项重要考试还有一个月，您的复习状态：", cat: "mbti", type: "JP", opts: ["第一天就把任务平摊到每天，每天完成固定的页数", "前二十天看不进去，最后一周靠着极度的压力疯狂突击"], vals: ["J", "P"] },
+    { id: 322, text: "在做出一项重要决定（比如买房买车）后，您通常的感觉是：", cat: "mbti", type: "JP", opts: ["长舒一口气，终于把这件事情定下来了，不用再想了", "立刻开始焦虑：如果选另一套会不会更好？是不是做决定太早了？"], vals: ["J", "P"] },
+    { id: 323, text: "对于“惊喜”或“突发事件”，您的态度是：", cat: "mbti", type: "JP", opts: ["不太喜欢，我更喜欢一切都在我预期和掌控之中的感觉", "很喜欢，生活如果每天都按计划走就太无聊了，我喜欢拥抱变化"], vals: ["J", "P"] },
+    { id: 324, text: "您的电脑桌面文件通常呈现什么状态？", cat: "mbti", type: "JP", opts: ["非常干净，所有的文件都在指定的D盘文件夹里归类好", "满屏幕都是各种临时文件、快捷方式，自己找得到就行"], vals: ["J", "P"] },
+    { id: 325, text: "如果要用一个图形来比喻您的生活方式，您会选：", cat: "mbti", type: "JP", opts: ["有棱有角、边界清晰的方块", "形状不固定、可以随时变形的水滴"], vals: ["J", "P"] }
+];
+
+// --- 高压抗干扰算数题 (10道，选项已经完全打乱规律) ---
+const mathPool = [
+    { id: 401, text: "高压抗干扰心算：15 + 27 = ?", ans: 42, opts: ["42", "41", "40", "43"] },
+    { id: 402, text: "高压抗干扰心算：56 - 29 = ?", ans: 27, opts: ["25", "27", "26", "28"] },
+    { id: 403, text: "高压抗干扰心算：8 × 9 = ?", ans: 72, opts: ["63", "70", "72", "81"] },
+    { id: 404, text: "高压抗干扰心算：144 ÷ 12 = ?", ans: 12, opts: ["10", "11", "14", "12"] },
+    { id: 405, text: "高压抗干扰心算：35 + 48 - 19 = ?", ans: 64, opts: ["64", "63", "65", "66"] },
+    { id: 406, text: "高压抗干扰心算：6 × 7 + 8 = ?", ans: 50, opts: ["48", "50", "49", "51"] },
+    { id: 407, text: "高压抗干扰心算：100 - 36 + 15 = ?", ans: 79, opts: ["77", "78", "79", "80"] },
+    { id: 408, text: "高压抗干扰心算：18 × 3 ÷ 6 = ?", ans: 9, opts: ["7", "8", "10", "9"] },
+    { id: 409, text: "高压抗干扰心算：250 ÷ 5 - 20 = ?", ans: 30, opts: ["30", "28", "29", "31"] },
+    { id: 410, text: "高压抗干扰心算：45 + 36 - 27 + 18 = ?", ans: 72, opts: ["71", "72", "73", "74"] }
+];
+
+let questions = []; // 最终生成的70道题
+let answers = [];
+let currIdx = 0;
+let timerObj;
+let timeLeft = 30 * 60;
+let userInfo = {};
+let report = {};
+
+// 严格不重复的抽样算法
+function sampleUnique(arr, count) {
+    let copy = [...arr];
+    let res = [];
+    while(res.length < count && copy.length > 0) {
+        let r = Math.floor(Math.random() * copy.length);
+        res.push(copy.splice(r, 1)[0]);
+    }
+    return res;
+}
+
+// 组装70题试卷
+function generatePaper() {
+    let lies = sampleUnique(psychPool.filter(q=>q.cat === "lie"), 4); 
+    let atts = sampleUnique(psychPool.filter(q=>q.cat === "att"), 2);
+    let discs = sampleUnique(psychPool.filter(q=>q.cat === "disc"), 14);
+    let reds = sampleUnique(psychPool.filter(q=>q.cat === "red"), 15);
+    let mbtis = sampleUnique(psychPool.filter(q=>q.cat === "mbti"), 25);
+    
+    // 心理题混合打乱 (60题)
+    let pPart = sampleUnique([...lies, ...atts, ...discs, ...reds, ...mbtis], 60);
+    // 算数题打乱 (10题)
+    let mPart = sampleUnique(mathPool, 10);
+    
+    // 保证正好70题
+    return [...pPart, ...mPart];
+}
+
+function switchScreen(id) {
+    document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+function startTest() {
+    let name = document.getElementById('ipt-name').value.trim();
+    let phone = document.getElementById('ipt-phone').value.trim();
+    let idStr = document.getElementById('ipt-id').value.trim();
+
+    if(!name || !/^1[3-9]\d{9}$/.test(phone) || !/^\d{17}[\dXx]$/.test(idStr)) {
+        alert("请输入真实有效的姓名、11位手机号和18位身份证号码！");
+        return;
+    }
+
+    // 核心锁死：防二次答题
+    if(localStorage.getItem('xf_tested_' + idStr)) {
+        alert("⚠️ 系统检测到该身份证号已参与过测试！为保证公平，每人终生仅限作答一次。");
+        return;
+    }
+
+    userInfo = { name, phone, idStr };
+    questions = generatePaper();
+    answers = new Array(70).fill(null);
+
+    switchScreen('screen-test');
+    
+    timerObj = setInterval(() => {
+        timeLeft--;
+        let m = Math.floor(timeLeft / 60);
+        let s = timeLeft % 60;
+        document.getElementById('txt-time').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+        if(timeLeft <= 0) { clearInterval(timerObj); calcRes(); }
+    }, 1000);
+
+    renderQ();
+}
+
+function renderQ() {
+    const q = questions[currIdx];
+    const box = document.getElementById('q-box');
+    let isMath = q.opts ? false : true;
+
+    let tag = isMath ? "基础抗干扰运算" : "情境隐喻测试";
+    let cssText = isMath ? "q-math" : "q-text";
+    let optsArray = isMath ? q.opts : q.opts;
+
+    box.innerHTML = `
+        <div class="q-tag">${tag}</div>
+        <div class="${cssText}">${q.text}</div>
+        <div class="opt-list">
+            ${optsArray.map((opt, i) => `
+                <div class="opt-item ${answers[currIdx] === i ? 'active' : ''}" onclick="selectOpt(${i})">
+                    <input type="radio" ${answers[currIdx] === i ? 'checked' : ''}>
+                    <span>${opt}</span>
+                </div>
+            `).join('')}
+        </div>
+    `;
+
+    document.getElementById('txt-prog').textContent = `${currIdx + 1}/70`;
+    document.getElementById('btn-prev').style.visibility = currIdx === 0 ? 'hidden' : 'visible';
+    document.getElementById('btn-next').textContent = currIdx === 69 ? "提交试卷" : "下一题";
+}
+
+function selectOpt(idx) {
+    answers[currIdx] = idx;
+    renderQ();
+}
+
+function goPrev() { if(currIdx > 0) { currIdx--; renderQ(); } }
+function goNext() {
+    if(currIdx === 69) {
+        if(answers.includes(null)) {
+            if(!confirm("⚠️ 您还有未作答的题目，强制交卷可能被判定为不合格。确认交卷吗？")) return;
+        } else {
+            if(!confirm("确认提交试卷吗？交卷后将无法再次修改和测试。")) return;
         }
+        clearInterval(timerObj);
+        
+        // 记录本地缓存，锁死该身份证
+        localStorage.setItem('xf_tested_' + userInfo.idStr, "TRUE");
+        
+        calcRes();
+    } else {
+        currIdx++; renderQ();
+    }
+}
 
-        function prevQ() { if(currQ>0) { currQ--; renderQ(); } }
-        function nextQ() {
-            if(currQ===69) {
-                if(answers.includes(null) && !confirm("您有未作答的题目，强制交卷可能被判定不合格，确认交卷吗？")) return;
-                clearInterval(timer); calcResult();
-            } else { currQ++; renderQ(); }
-        }
+// 综合结算模型
+function calcRes() {
+    let lieScore = 0, attFail = 0, redTrig = 0, discScore = 0, mathCorrect = 0;
+    let mbti = {E:0, I:0, S:0, N:0, T:0, F:0, J:0, P:0};
 
-        // ==========================================
-        // 综合智能鉴定模型 (风控阻断逻辑)
-        // ==========================================
-        function calcResult() {
-            let attFail = 0, lieScore = 0, redTrig = 0, discScore = 0, mathOk = 0;
-            let mbti = {E:0, I:0, S:0, N:0, T:0, F:0, J:0, P:0};
+    questions.forEach((q, i) => {
+        let a = answers[i];
+        if(a === null) return;
 
-            questions.forEach((q, idx) => {
-                let ans = answers[idx];
-                if(ans === null) return;
+        if(q.cat === "lie") lieScore += q.scores[a];
+        else if(q.cat === "att") { if(a !== q.correct) attFail++; }
+        else if(q.cat === "red") { if(q.scores[a] === 0) redTrig++; }
+        else if(q.cat === "disc") discScore += q.scores[a];
+        else if(q.cat === "mbti") mbti[q.vals[a]]++;
+        else if(q.ans !== undefined) { if(parseInt(q.opts[a]) === q.ans) mathCorrect++; }
+    });
 
-                if(q.category === 'attention') { if(ans !== q.correctIndex) attFail++; }
-                else if(q.category === 'lie') { lieScore += q.scores[ans]; }
-                else if(q.category === 'redline') { if(q.scores[ans] === 0) redTrig++; }
-                else if(q.category === 'discipline') { discScore += q.scores[ans]; }
-                else if(q.type === 'mbti') { mbti[q.values[ans]]++; }
-                else if(q.type === 'math') { if(parseInt(q.opts[ans]) === q.ans) mathOk++; }
-            });
+    // 纪律分换算为百分制 (14题*5分=70满分)
+    let discPct = Math.round((discScore / 70) * 100) || 0;
+    
+    // MBTI计算
+    let type = (mbti.E >= mbti.I ? "E" : "I") + (mbti.S >= mbti.N ? "S" : "N") + (mbti.T >= mbti.F ? "T" : "F") + (mbti.J >= mbti.P ? "J" : "P");
 
-            let discPct = Math.round((discScore / (10 * 5)) * 100) || 0; // 满分估算为50
-            let mbtiStr = (mbti.E>=mbti.I?'E':'I')+(mbti.S>=mbti.N?'S':'N')+(mbti.T>=mbti.F?'T':'F')+(mbti.J>=mbti.P?'J':'P');
+    // 状态判定逻辑
+    let status = "测试合格", desc = "该同志心理健康状况良好，纪律潜质符合要求，具备培养价值。", bgClass = "pass";
+    let lieLabel = "真实客观", redLabel = "安全", discLabel = `${discPct}分 (良好)`;
 
-            // 核心风控判定逻辑
-            let status = '合格', sClass = 'status-pass', desc = '该同志心理健康，适应能力达标，建议招录。';
-            let l_att = '正常', l_lie = '正常', l_red = '安全', c_att = 'label-success', c_lie = 'label-success', c_red = 'label-success';
+    if(attFail > 0) {
+        status = "成绩无效"; bgClass = "fail"; desc = "系统检测到考生存在严重的“乱答题”行为（未通过专注度测试）。";
+        lieLabel = "涉嫌乱点";
+    } else if(lieScore >= 3) {
+        status = "成绩无效"; bgClass = "fail"; desc = "防伪装检测未通过。考生刻意规避真实想法，试图迎合“好答案”，成绩不可信。";
+        lieLabel = `过度伪装 (掩饰分:${lieScore})`;
+    } else if(redTrig > 0) {
+        status = "不合格 (预警)"; bgClass = "fail"; desc = "触发压力或情绪极端红线，该同志在面对高压环境时可能有失控风险，不建议录用。";
+        redLabel = `触发 ${redTrig} 次危险信号`;
+    } else if(discPct < 60) {
+        status = "不合格"; bgClass = "fail"; desc = "隐喻投射显示，该同志日常随性散漫，纪律与服从意识较差，难以适应半军事化管理。";
+        discLabel = `${discPct}分 (较差)`;
+    }
 
-            if(attFail > 0) {
-                status = '成绩无效'; sClass = 'status-invalid'; desc = '未通过专注度检测，存在严重“乱答题”嫌疑。';
-                l_att = '失败 (涉嫌乱答)'; c_att = 'label-warning';
-            } else if(lieScore >= 4) {
-                status = '成绩无效'; sClass = 'status-invalid'; desc = '掩饰性得分极高，涉嫌“刻意规避真实想法”，成绩不可信。';
-                l_lie = `高掩饰 (${lieScore}分)`; c_lie = 'label-warning';
-            } else if(redTrig > 0) {
-                status = '不合格'; sClass = 'status-fail'; desc = '触发心理极化/创伤红线，涉嫌存在潜在心理隐患。';
-                l_red = `触发 ${redTrig} 项危险信号`; c_red = 'label-danger';
-            } else if(discPct < 50) {
-                status = '不合格'; sClass = 'status-fail'; desc = '纪律与服从意识极差，无法适应半军事化管理。';
-            }
+    report = { status, desc, lieLabel, redLabel, discLabel, type, mathCorrect };
 
-            repData = { status, desc, attFail, lieScore, redTrig, discPct, mathOk, mbtiStr };
+    // 渲染结果
+    switchScreen('screen-result');
+    let banner = document.getElementById('res-banner');
+    banner.className = `res-card ${bgClass}`;
+    document.getElementById('res-status').textContent = status;
+    document.getElementById('res-desc').textContent = desc;
 
-            // 渲染结果
-            document.getElementById('testScreen').classList.remove('active');
-            document.getElementById('resultScreen').classList.add('active');
-            
-            const card = document.getElementById('statusCard');
-            card.className = `result-status-card ${sClass}`;
-            document.getElementById('statusTitle').textContent = status;
-            document.getElementById('statusDesc').textContent = desc;
+    document.getElementById('val-lie').textContent = lieLabel;
+    document.getElementById('val-red').textContent = redLabel;
+    document.getElementById('val-disc').textContent = discLabel;
+    document.getElementById('val-mbti').textContent = `${type} 型`;
+    document.getElementById('val-math').textContent = `${mathCorrect} / 10`;
+}
 
-            document.getElementById('resAttention').innerHTML = `<span class="${c_att}">${l_att}</span>`;
-            document.getElementById('resLie').innerHTML = `<span class="${c_lie}">${l_lie}</span>`;
-            document.getElementById('resRedline').innerHTML = `<span class="${c_red}">${l_red}</span>`;
-            document.getElementById('resDiscipline').innerHTML = `<span class="${discPct>=60?'label-success':'label-danger'}">${discPct} 分 (满分100)</span>`;
-            document.getElementById('resMath').textContent = `${mathOk} / 10 题`;
-            document.getElementById('resMbti').textContent = `${mbtiStr} 型`;
-        }
+function downloadData() {
+    const data = `
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     专职消防员心理潜质评估报告 (政工内参)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+【应试人信息】
+姓名：${userInfo.name}
+电话：${userInfo.phone}
+证件：${userInfo.idStr}
 
-        function downloadReport() {
-            const content = `
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  新招录消防员心理与适应性评估鉴定表
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-【应聘人员】
-姓名：${candInfo.name}
-证件：${candInfo.id}
+【系统评估结论】
+最终结论：[ ${report.status} ]
+系统评语：${report.desc}
 
-【系统鉴定结果】
-最终结论：[ ${repData.status} ]
-系统评语：${repData.desc}
+【风控与红线数据】
+伪装与乱答嫌疑：${report.lieLabel}
+心理极端红线：${report.redLabel}
+纪律潜质得分：${report.discLabel}
+基础抗压算数：${report.mathCorrect} 题正确
 
-【答题风控追踪 (政工必看)】
-乱答题嫌疑：${repData.attFail > 0 ? '⚠️ 是 (未通过专注度检测)' : '否'}
-伪装嫌疑 (掩饰分)：${repData.lieScore} 分 ${repData.lieScore >= 4 ? '(⚠️极高)' : '(正常)'}
+【MBTI潜意识职业画像】
+测试结果：${report.type} 型
+说明：该指标反映考生潜意识的行事风格与人际交往模式，供下队后班长带兵管理参考。
 
-【核心素质数据】
-心理极化红线项：触发 ${repData.redTrig} 次
-纪律与服从得分：${repData.discPct} / 100
-基础抗压算数：${repData.mathOk} / 10
-MBTI 倾向：${repData.mbtiStr}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-生成时间：${new Date().toLocaleString()}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+生成时间：${new Date().toLocaleString('zh-CN')}
+说明：本系统采用心理投射技术，防作弊防背题。
 `;
-            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a'); a.href = url;
-            a.download = `鉴定报告_${candInfo.name}_${candInfo.id.slice(-4)}.txt`;
-            a.click(); URL.revokeObjectURL(url);
-        }
-    </script>
+    const blob = new Blob([data], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url;
+    a.download = `测评报告_${userInfo.name}_${userInfo.idStr.slice(-4)}.txt`;
+    a.click(); URL.revokeObjectURL(url);
+}
+</script>
 </body>
 </html>
